@@ -37,22 +37,61 @@ function bui:init()
     main.BackgroundColor3 = Color3.fromRGB(18, 18, 18);
     main.Parent = gui;
     
-    local header = Instance.new("Frame");
-    header.Name = "header";
-    header.Size = UDim2.new(1, 0, 0.08, 0);
-    header.BackgroundColor3 = Color3.fromRGB(60, 60, 60);
-    header.Parent = main;
+    -- Top gradient frame
+    local topgrad = Instance.new("Frame");
+    topgrad.Name = "topGradient";
+    topgrad.Size = UDim2.new(1, 0, 0.2, 0);
+    topgrad.BackgroundColor3 = Color3.fromRGB(18, 18, 18);
+    topgrad.BorderSizePixel = 0;
+    topgrad.Parent = main;
     
+    local grad = Instance.new("UIGradient");
+    grad.Color = ColorSequence.new({
+        ColorSequenceKeypoint.new(0, Color3.fromRGB(89, 0, 179)),
+        ColorSequenceKeypoint.new(0.5, Color3.fromRGB(45, 0, 90)),
+        ColorSequenceKeypoint.new(1, Color3.fromRGB(18, 18, 18))
+    });
+    grad.Rotation = 90;
+    grad.Parent = topgrad;
+    
+    -- Logo text
+    local logo = Instance.new("TextLabel");
+    logo.Name = "logo";
+    logo.Size = UDim2.new(0.2, 0, 0.05, 0);
+    logo.Position = UDim2.new(0.02, 0, 0.02, 0);
+    logo.Text = "Xenon.AI";
+    logo.TextColor3 = Color3.new(1, 1, 1);
+    logo.TextSize = 24;
+    logo.Font = Enum.Font.GothamBold;
+    logo.TextXAlignment = Enum.TextXAlignment.Left;
+    logo.BackgroundTransparency = 1;
+    logo.Parent = main;
+    
+    -- Title text (Good morning/afternoon/night)
     local title = Instance.new("TextLabel");
     title.Name = "title";
-    title.Size = UDim2.new(1, 0, 1, 0);
+    title.Size = UDim2.new(0.6, 0, 0.1, 0);
+    title.Position = UDim2.new(0.2, 0, 0.2, 0);
     title.Text = "Good " .. gettime();
     title.TextColor3 = Color3.new(1, 1, 1);
-    title.TextSize = 24;
+    title.TextSize = 32;
     title.Font = Enum.Font.GothamBold;
     title.TextXAlignment = Enum.TextXAlignment.Center;
     title.BackgroundTransparency = 1;
-    title.Parent = header;
+    title.Parent = main;
+    
+    -- Subtitle text
+    local subtitle = Instance.new("TextLabel");
+    subtitle.Name = "subtitle";
+    subtitle.Size = UDim2.new(0.6, 0, 0.05, 0);
+    subtitle.Position = UDim2.new(0.2, 0, 0.3, 0);
+    subtitle.Text = "Bring ideas to life in seconds or get help on existing projects.";
+    subtitle.TextColor3 = Color3.fromRGB(200, 200, 200);
+    subtitle.TextSize = 16;
+    subtitle.Font = Enum.Font.Gotham;
+    subtitle.TextXAlignment = Enum.TextXAlignment.Center;
+    subtitle.BackgroundTransparency = 1;
+    subtitle.Parent = main;
     
     local sidebar = Instance.new("Frame");
     sidebar.Name = "sidebar";
@@ -82,8 +121,8 @@ function bui:init()
     
     local chatbox = Instance.new("Frame");
     chatbox.Name = "chatbox";
-    chatbox.Size = UDim2.new(0.75, 0, 0.92, 0);
-    chatbox.Position = UDim2.new(0.25, 0, 0.08, 0);
+    chatbox.Size = UDim2.new(0.75, 0, 0.6, 0);
+    chatbox.Position = UDim2.new(0.25, 0, 0.4, 0);
     chatbox.BackgroundColor3 = Color3.fromRGB(22, 22, 22);
     chatbox.Parent = main;
     
@@ -113,10 +152,9 @@ function bui:init()
     input.BackgroundTransparency = 1;
     input.Parent = inputframe;
     
-    animoutline(main);
-    animoutline(sidebar);
     animoutline(chatbox);
     animoutline(inputframe);
+    animoutline(dropdown);
     
     impbtn.MouseButton1Click:Connect(function()
         local files = listfiles("workspace");
